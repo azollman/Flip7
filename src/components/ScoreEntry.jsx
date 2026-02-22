@@ -33,8 +33,21 @@ export default function ScoreEntry({ players, onSave, onCancel }) {
     const currentScore = calculateScore();
 
     const handleToggleNumber = (n) => {
-        if (isBusted) return;
-        setNumCards([...numCards, n]);
+        if (isBusted || hasFlip7) return;
+
+        // If number is already in the list, it's a BUST!
+        if (numCards.includes(n)) {
+            handleBust();
+            return;
+        }
+
+        const newNumCards = [...numCards, n];
+        setNumCards(newNumCards);
+
+        // If we hit 7 unique numbers, that's a Flip 7
+        if (newNumCards.length === 7) {
+            setHasFlip7(true);
+        }
     };
 
     const handleToggleModifier = (mod) => {
@@ -111,17 +124,19 @@ export default function ScoreEntry({ players, onSave, onCancel }) {
                             {n}
                         </button>
                     ))}
-                    <button
+                    <div
                         className={`btn ${hasFlip7 ? 'btn-primary' : 'btn-secondary'}`}
                         style={{
                             gridColumn: 'span 3',
                             background: hasFlip7 ? 'var(--accent-green)' : '',
-                            borderRadius: '12px'
+                            borderRadius: '12px',
+                            cursor: 'default',
+                            opacity: hasFlip7 ? 1 : 0.5
                         }}
-                        onClick={() => setHasFlip7(!hasFlip7)}
                     >
-                        <Zap size={18} fill={hasFlip7 ? 'currentColor' : 'none'} /> Flip 7 (+15)
-                    </button>
+                        <Zap size={18} fill={hasFlip7 ? 'currentColor' : 'none'} />
+                        {hasFlip7 ? 'Flip 7 Bonus Active!' : 'Flip 7 (Automatic)'}
+                    </div>
                 </div>
             )}
 
