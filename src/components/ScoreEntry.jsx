@@ -86,99 +86,100 @@ export default function ScoreEntry({ players, onSave, onCancel }) {
     };
 
     return (
-        <div className="animate-fade-in" style={{ padding: '20px', paddingBottom: '120px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                <h2 style={{ fontSize: '1.2rem', color: 'var(--text-dim)' }}>Player {activePlayerIndex + 1} of {players.length}</h2>
-                <button className="btn btn-secondary btn-icon" onClick={onCancel}><X size={20} /></button>
-            </div>
-
-            <div className="glass-card" style={{
-                textAlign: 'center',
-                marginBottom: '24px',
-                border: isBusted ? '2px solid var(--accent-red)' : '1px solid var(--glass-border)',
-                padding: '32px 20px'
-            }}>
-                <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem', marginBottom: '4px' }}>Scoring for</p>
-                <h2 style={{ fontSize: '2rem', marginBottom: '12px' }}>{activePlayer.name}</h2>
-
-                <div style={{
-                    fontSize: '4.5rem',
-                    fontWeight: '800',
-                    color: isBusted ? 'var(--accent-red)' : 'var(--secondary)',
-                    textShadow: isBusted ? '0 0 20px rgba(239, 68, 68, 0.3)' : '0 0 20px rgba(255, 215, 0, 0.3)',
-                    lineHeight: 1
-                }}>
-                    {isBusted ? 'BUST' : currentScore}
+        <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', flex: 1, padding: '20px', minHeight: 0 }}>
+            <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    <h2 style={{ fontSize: '1.2rem', color: 'var(--text-dim)' }}>Player {activePlayerIndex + 1} of {players.length}</h2>
+                    <button className="btn btn-secondary btn-icon" onClick={onCancel}><X size={20} /></button>
                 </div>
-            </div>
 
-            {!isBusted && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '16px' }}>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0].map(n => (
-                        <button
-                            key={n}
-                            className="btn btn-secondary"
-                            style={{ height: '54px', fontSize: '1.2rem', borderRadius: '12px' }}
-                            onClick={() => handleToggleNumber(n)}
-                        >
-                            {n}
-                        </button>
-                    ))}
-                    <div
-                        className={`btn ${hasFlip7 ? 'btn-primary' : 'btn-secondary'}`}
-                        style={{
-                            gridColumn: 'span 3',
-                            background: hasFlip7 ? 'var(--accent-green)' : '',
-                            borderRadius: '12px',
-                            cursor: 'default',
-                            opacity: hasFlip7 ? 1 : 0.5
-                        }}
-                    >
-                        <Zap size={18} fill={hasFlip7 ? 'currentColor' : 'none'} />
-                        {hasFlip7 ? 'Flip 7 Bonus Active!' : 'Flip 7 (Automatic)'}
+                <div className="glass-card" style={{
+                    textAlign: 'center',
+                    marginBottom: '16px',
+                    border: isBusted ? '2px solid var(--accent-red)' : '1px solid var(--glass-border)',
+                    padding: '16px 20px'
+                }}>
+                    <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem', marginBottom: '4px' }}>Scoring for</p>
+                    <h2 style={{ fontSize: '1.5rem', marginBottom: '8px' }}>{activePlayer.name}</h2>
+
+                    <div style={{
+                        fontSize: '3.5rem',
+                        fontWeight: '800',
+                        color: isBusted ? 'var(--accent-red)' : 'var(--secondary)',
+                        textShadow: isBusted ? '0 0 20px rgba(239, 68, 68, 0.3)' : '0 0 20px rgba(255, 215, 0, 0.3)',
+                        lineHeight: 1
+                    }}>
+                        {isBusted ? 'BUST' : currentScore}
                     </div>
                 </div>
-            )}
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '24px' }}>
-                {['+2', '+4', '+6', '+8', '+10', 'x2'].map(mod => (
-                    <button
-                        key={mod}
-                        className={`btn ${modifiers.includes(mod) ? 'btn-primary' : 'btn-secondary'}`}
-                        style={{ borderRadius: '12px' }}
-                        onClick={() => handleToggleModifier(mod)}
-                        disabled={isBusted}
-                    >
-                        {mod}
-                    </button>
-                ))}
+                {!isBusted && (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '16px' }}>
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0].map(n => (
+                            <button
+                                key={n}
+                                className="btn btn-secondary"
+                                style={{ height: '54px', fontSize: '1.2rem', borderRadius: '12px' }}
+                                onClick={() => handleToggleNumber(n)}
+                            >
+                                {n}
+                            </button>
+                        ))}
+                        <div
+                            className={`btn ${hasFlip7 ? 'btn-primary' : 'btn-secondary'}`}
+                            style={{
+                                gridColumn: 'span 3',
+                                background: hasFlip7 ? 'var(--accent-green)' : '',
+                                borderRadius: '12px',
+                                cursor: 'default',
+                                opacity: hasFlip7 ? 1 : 0.5
+                            }}
+                        >
+                            <Zap size={18} fill={hasFlip7 ? 'currentColor' : 'none'} />
+                            {hasFlip7 ? 'Flip 7 Bonus Active!' : 'Flip 7 (Automatic)'}
+                        </div>
+                    </div>
+                )}
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '16px' }}>
+                    {['+2', '+4', '+6', '+8', '+10', 'x2'].map(mod => (
+                        <button
+                            key={mod}
+                            className={`btn ${modifiers.includes(mod) ? 'btn-primary' : 'btn-secondary'}`}
+                            style={{ borderRadius: '12px' }}
+                            onClick={() => handleToggleModifier(mod)}
+                            disabled={isBusted}
+                        >
+                            {mod}
+                        </button>
+                    ))}
+                </div>
+
+                <div style={{
+                    minHeight: '40px',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '6px',
+                    justifyContent: 'center',
+                    background: 'rgba(0,0,0,0.2)',
+                    padding: '10px',
+                    borderRadius: '12px'
+                }}>
+                    {numCards.length === 0 && !isBusted && <span style={{ color: 'var(--text-dim)', fontSize: '0.8rem' }}>Tap numbers to add cards</span>}
+                    {numCards.map((n, i) => (
+                        <div key={i} style={{
+                            background: 'var(--primary)',
+                            padding: '4px 8px',
+                            borderRadius: '6px',
+                            fontSize: '0.8rem',
+                            fontWeight: '600',
+                            animation: 'slideUp 0.2s ease-out'
+                        }}>{n}</div>
+                    ))}
+                </div>
             </div>
 
-            <div style={{
-                minHeight: '40px',
-                marginBottom: '24px',
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '6px',
-                justifyContent: 'center',
-                background: 'rgba(0,0,0,0.2)',
-                padding: '10px',
-                borderRadius: '12px'
-            }}>
-                {numCards.length === 0 && !isBusted && <span style={{ color: 'var(--text-dim)', fontSize: '0.8rem' }}>Tap numbers to add cards</span>}
-                {numCards.map((n, i) => (
-                    <div key={i} style={{
-                        background: 'var(--primary)',
-                        padding: '4px 8px',
-                        borderRadius: '6px',
-                        fontSize: '0.8rem',
-                        fontWeight: '600',
-                        animation: 'slideUp 0.2s ease-out'
-                    }}>{n}</div>
-                ))}
-            </div>
-
-            <div style={{ display: 'flex', gap: '12px' }}>
+            <div style={{ display: 'flex', gap: '12px', paddingTop: '12px', flexShrink: 0 }}>
                 <button className="btn btn-secondary" onClick={isBusted ? resetCalculator : handleBust} style={{ flex: 1 }}>
                     <RotateCcw size={20} /> {isBusted ? 'Reset' : 'Bust'}
                 </button>
