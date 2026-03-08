@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Check, RotateCcw, Zap } from 'lucide-react';
+import { X, Check, RotateCcw, Zap, Bomb } from 'lucide-react';
 
 export default function ScoreEntry({ players, onSave, onCancel }) {
     const [currentRound, setCurrentRound] = useState({});
@@ -181,7 +181,7 @@ export default function ScoreEntry({ players, onSave, onCancel }) {
 
             <div style={{ display: 'flex', gap: '12px', paddingTop: '12px', flexShrink: 0 }}>
                 <button className="btn btn-secondary" onClick={isBusted ? resetCalculator : handleBust} style={{ flex: 1 }}>
-                    <RotateCcw size={20} /> {isBusted ? 'Reset' : 'Bust'}
+                    {isBusted ? <RotateCcw size={20} /> : <Bomb size={20} />} {isBusted ? 'Reset' : 'Bust'}
                 </button>
                 <button className="btn btn-primary" onClick={nextPlayer} style={{ flex: 2 }}>
                     {activePlayerIndex === players.length - 1 ? 'Finish Round' : 'Next Player'} <Check size={20} />
