@@ -12,7 +12,9 @@ export default function Scoreboard({ gameState, onAddRound, onUndo, onReset }) {
             <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
                 <div>
                     <h1 style={{ textAlign: 'left', fontSize: '2rem', marginBottom: '0' }}>FLIP7</h1>
-                    <p style={{ color: 'var(--text-dim)', fontSize: '0.8rem' }}>Target: {gameState.targetScore}</p>
+                    <p style={{ color: 'var(--text-dim)', fontSize: '0.8rem' }}>
+                        {(gameState.variant ?? 'classic') === 'vengeance' ? 'With a Vengeance · ' : ''}Target: {gameState.targetScore}
+                    </p>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                     <button className={`btn btn-secondary btn-icon ${view === 'history' ? 'active' : ''}`} onClick={() => setView('history')}>
@@ -62,11 +64,14 @@ export default function Scoreboard({ gameState, onAddRound, onUndo, onReset }) {
                                     <div style={{ fontSize: '1.75rem', fontWeight: '800', color: index === 0 ? 'var(--secondary)' : 'white' }}>
                                         {player.totalScore}
                                     </div>
-                                    {player.history.length > 0 && (
-                                        <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', textAlign: 'right' }}>
-                                            +{player.history[player.history.length - 1]} last round
-                                        </div>
-                                    )}
+                                    {player.history.length > 0 && (() => {
+                                        const last = player.history[player.history.length - 1];
+                                        return (
+                                            <div style={{ fontSize: '0.75rem', color: last < 0 ? 'var(--accent-red)' : 'var(--text-dim)', textAlign: 'right' }}>
+                                                {last >= 0 ? '+' : ''}{last} last round
+                                            </div>
+                                        );
+                                    })()}
                                 </div>
                             </div>
                         ))}

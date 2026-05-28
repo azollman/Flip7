@@ -5,6 +5,7 @@ import RulesModal from './RulesModal';
 export default function Setup({ onStart }) {
     const [playerNames, setPlayerNames] = useState(['Player 1', 'Player 2']);
     const [targetScore, setTargetScore] = useState(200);
+    const [variant, setVariant] = useState('classic');
     const [showRules, setShowRules] = useState(false);
 
     const addPlayer = () => {
@@ -27,14 +28,14 @@ export default function Setup({ onStart }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onStart(playerNames.filter(n => n.trim() !== ''), targetScore);
+        onStart(playerNames.filter(n => n.trim() !== ''), targetScore, variant);
     };
 
     return (
         <div className="animate-fade-in" style={{ padding: '20px' }}>
-            {showRules && <RulesModal onClose={() => setShowRules(false)} />}
+            {showRules && <RulesModal onClose={() => setShowRules(false)} variant={variant} />}
 
-            <header style={{ marginBottom: '40px', textAlign: 'center', position: 'relative' }}>
+            <header style={{ marginBottom: '24px', textAlign: 'center', position: 'relative' }}>
                 <button
                     onClick={() => setShowRules(true)}
                     style={{ position: 'absolute', right: 0, top: 0, background: 'none', border: 'none', color: 'var(--text-dim)' }}
@@ -44,6 +45,25 @@ export default function Setup({ onStart }) {
                 <h1 style={{ fontSize: '3.5rem', marginBottom: '0' }}>FLIP7</h1>
                 <p style={{ color: 'var(--text-dim)', fontSize: '1.1rem' }}>Scoring App</p>
             </header>
+
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
+                <button
+                    type="button"
+                    className={`btn ${variant === 'classic' ? 'btn-primary' : 'btn-secondary'}`}
+                    style={{ flex: 1 }}
+                    onClick={() => setVariant('classic')}
+                >
+                    Classic
+                </button>
+                <button
+                    type="button"
+                    className={`btn ${variant === 'vengeance' ? 'btn-primary' : 'btn-secondary'}`}
+                    style={{ flex: 1 }}
+                    onClick={() => setVariant('vengeance')}
+                >
+                    With a Vengeance
+                </button>
+            </div>
 
             <div className="glass-card">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>

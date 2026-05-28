@@ -16,7 +16,7 @@ export function useGameState() {
     }
   }, [gameState]);
 
-  const startNewGame = (players, targetScore = 200) => {
+  const startNewGame = (players, targetScore = 200, variant = 'classic') => {
     const newGame = {
       players: players.map(name => ({
         id: crypto.randomUUID(),
@@ -25,6 +25,7 @@ export function useGameState() {
         history: []
       })),
       targetScore,
+      variant,
       rounds: [],
       isGameOver: false,
       winner: null,

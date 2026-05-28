@@ -8,8 +8,8 @@ function App() {
   const { gameState, startNewGame, addRoundScores, undoLastRound, resetGame } = useGameState();
   const [screen, setScreen] = useState('main'); // 'main' or 'entry'
 
-  const handleStart = (players, targetScore) => {
-    startNewGame(players, targetScore);
+  const handleStart = (players, targetScore, variant) => {
+    startNewGame(players, targetScore, variant);
   };
 
   const handleAddRound = () => {
@@ -31,6 +31,7 @@ function App() {
     return (
       <ScoreEntry
         players={gameState.players}
+        variant={gameState.variant ?? 'classic'}
         onSave={handleSaveScores}
         onCancel={() => setScreen('main')}
       />
